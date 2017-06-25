@@ -1,0 +1,8 @@
+tasks:
+      server: hello
+
+person:
+  config: config
+  name: nguyen van a
+  age: 12
+  say: hello andorid

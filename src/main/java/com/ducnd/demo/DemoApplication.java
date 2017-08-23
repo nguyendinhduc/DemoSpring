@@ -11,13 +11,14 @@ import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.util.Arrays;
 
 @SpringBootApplication
-@EnableConfigurationProperties
+@EnableScheduling
 @PropertySource("classpath:application.properties")
 public class DemoApplication implements ServletContextInitializer{
     private static final Logger LOGGER = Logger.getLogger(DemoApplication.class);

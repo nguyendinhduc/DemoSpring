@@ -22,12 +22,14 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User implements Serializable {
 
-    private static final long serialVersionUID = -1502007327;
+    private static final long serialVersionUID = -1581665384;
 
     private Integer id;
     private String  username;
     private String  password;
     private String  token;
+    private String  devicetoken;
+    private String  ostype;
 
     public User() {}
 
@@ -36,18 +38,24 @@ public class User implements Serializable {
         this.username = value.username;
         this.password = value.password;
         this.token = value.token;
+        this.devicetoken = value.devicetoken;
+        this.ostype = value.ostype;
     }
 
     public User(
         Integer id,
         String  username,
         String  password,
-        String  token
+        String  token,
+        String  devicetoken,
+        String  ostype
     ) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.token = token;
+        this.devicetoken = devicetoken;
+        this.ostype = ostype;
     }
 
     public Integer getId() {
@@ -82,6 +90,22 @@ public class User implements Serializable {
         this.token = token;
     }
 
+    public String getDevicetoken() {
+        return this.devicetoken;
+    }
+
+    public void setDevicetoken(String devicetoken) {
+        this.devicetoken = devicetoken;
+    }
+
+    public String getOstype() {
+        return this.ostype;
+    }
+
+    public void setOstype(String ostype) {
+        this.ostype = ostype;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("User (");
@@ -90,6 +114,8 @@ public class User implements Serializable {
         sb.append(", ").append(username);
         sb.append(", ").append(password);
         sb.append(", ").append(token);
+        sb.append(", ").append(devicetoken);
+        sb.append(", ").append(ostype);
 
         sb.append(")");
         return sb.toString();

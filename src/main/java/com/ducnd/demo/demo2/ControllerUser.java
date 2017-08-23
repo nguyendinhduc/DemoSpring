@@ -1,5 +1,7 @@
 package com.ducnd.demo.demo2;
 
+import com.ducnd.demo.response.ResponseUtils;
+import com.ducnd.demo.security.UserContext;
 import com.ducnd.demo.security.withoutloginregister.JwtAuthenticationToken;
 import com.ducnd.mysql.tables.User;
 import com.ducnd.mysql.tables.records.UserRecord;
@@ -134,6 +136,21 @@ public class ControllerUser {
                 .getBody();
         LOG.info("JWT_DECODED: " + body.get("name", String.class));
         return "dfd";
+    }
+
+
+    @PostMapping(value = "pushDeviceToken", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    @ResponseBody
+    public com.ducnd.demo.response.BaseResponse pushDeviceToken(@RequestParam(value = "pushDeviceToken") String deviceToken) {
+        UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+        Condition condition = User.USER.USERNAME.eq(userContext.getUsername());
+        int column = baseManager.getDslContext().update(DSL.table(User.USER.getName())).set(DSL.field(User.USER.DEVICETOKEN), deviceToken)
+                .where(condition).execute();
+        if (column > 0) {
+            return ResponseUtils.getBaseResponse(0, "success");
+        } else {
+            return ResponseUtils.getBaseResponse(401, "can not insert int to database");
+        }
     }
 
 

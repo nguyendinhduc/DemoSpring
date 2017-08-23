@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User extends TableImpl<UserRecord> {
 
-    private static final long serialVersionUID = 524998529;
+    private static final long serialVersionUID = -1049482749;
 
     /**
      * The reference instance of <code>demo.user</code>
@@ -69,6 +69,16 @@ public class User extends TableImpl<UserRecord> {
      * The column <code>demo.user.token</code>.
      */
     public final TableField<UserRecord, String> TOKEN = createField("token", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
+
+    /**
+     * The column <code>demo.user.deviceToken</code>.
+     */
+    public final TableField<UserRecord, String> DEVICETOKEN = createField("deviceToken", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+
+    /**
+     * The column <code>demo.user.osType</code>.
+     */
+    public final TableField<UserRecord, String> OSTYPE = createField("osType", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
 
     /**
      * Create a <code>demo.user</code> table reference

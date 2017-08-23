@@ -28,7 +28,7 @@ public class FcmClientIntegrationTest {
     @Autowired
     private BaseManager baseManager;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 150000)
     public void sendNotification() {
         Condition condition = User.USER.DEVICETOKEN.isNotNull();
         Result<UserRecord> users = baseManager.getDslContext().selectFrom((User.USER)).where(condition).fetch();

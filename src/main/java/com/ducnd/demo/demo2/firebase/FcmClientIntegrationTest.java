@@ -5,15 +5,12 @@ import com.ducnd.mysql.tables.User;
 import com.ducnd.mysql.tables.records.UserRecord;
 import org.jooq.Condition;
 import org.jooq.Result;
-import org.jooq.SelectLimitStep;
-import org.jooq.impl.DSL;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;

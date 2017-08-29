@@ -5,6 +5,7 @@ import com.ducnd.demo.security.login.AjaxAuthenLoginProvider;
 import com.ducnd.demo.security.match.MatchLoginRegister;
 import com.ducnd.demo.security.match.SkipPathRequestMatcher;
 import com.ducnd.demo.security.regiseter.AjaxRegisterProvider;
+import com.ducnd.demo.security.withoutloginregister.AjaxTokenAuthenticationFailureHandler;
 import com.ducnd.demo.security.withoutloginregister.JwtAuthenticationProvider;
 import com.ducnd.demo.security.withoutloginregister.JwtTokenAuthenticationProcessingFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,9 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private AjaxAuthenticationLoginRegisterSuccessHandler authenticationSuccessHandler;
 
     @Autowired
-    private AjaxAuthenticationLoginRegisterFailureHandler ajaxAuthenticationLoginRegisterFailureHandler;
-
-    @Autowired
     private AjaxAuthenLoginProvider ajaxLoginProcessingFilter;
 
     @Autowired
@@ -64,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         matchs.add(Constants.ENPOINT_REGISTER);
         MatchLoginRegister matchLoginRegister = new MatchLoginRegister(matchs);
         AjaxLoginRegisterProcessingFilter filter =
-                new AjaxLoginRegisterProcessingFilter(matchLoginRegister, authenticationSuccessHandler, ajaxAuthenticationLoginRegisterFailureHandler, objectMapper);
+                new AjaxLoginRegisterProcessingFilter(matchLoginRegister, authenticationSuccessHandler, new AjaxAuthenticationLoginRegisterFailureHandler(objectMapper), objectMapper);
         try {
             filter.setAuthenticationManager(authenticationManagerBean());
         } catch (Exception e) {
@@ -86,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         listNotmap.add(Constants.ENPOINT_REGISTER);
         RequestMatcher matcher = new SkipPathRequestMatcher(listNotmap, Constants.ENPOINT_MATCH_API);
         JwtTokenAuthenticationProcessingFilter filter
-                = new JwtTokenAuthenticationProcessingFilter(matcher, ajaxAuthenticationLoginRegisterFailureHandler, objectMapper);
+                = new JwtTokenAuthenticationProcessingFilter(matcher, new AjaxTokenAuthenticationFailureHandler(objectMapper), objectMapper);
         try {
             filter.setAuthenticationManager(authenticationManagerBean());
         } catch (Exception e) {

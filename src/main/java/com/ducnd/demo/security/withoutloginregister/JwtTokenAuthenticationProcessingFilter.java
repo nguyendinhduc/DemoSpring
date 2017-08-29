@@ -25,14 +25,12 @@ import java.io.IOException;
  * Created by ducnd on 6/25/17.
  */
 public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
-    private ObjectMapper objectMapper;
     private final AuthenticationFailureHandler failureHandler;
 
     public JwtTokenAuthenticationProcessingFilter(RequestMatcher matcher,
                                                   AuthenticationFailureHandler failureHandler, ObjectMapper objectMapper) {
         super(matcher);
         this.failureHandler = failureHandler;
-        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -56,7 +54,27 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
         SecurityContextHolder.clearContext();
 
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        objectMapper.writeValue(response.getWriter(), ResponseUtils.getBaseResponse(HttpStatus.UNAUTHORIZED.value(), failed.getMessage()));
         failureHandler.onAuthenticationFailure(request, response, failed);
     }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        System.out.println("destroy...........................");
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        super.afterPropertiesSet();
+        System.out.println("afterPropertiesSet...........................");
+    }
+
+    @Override
+    protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("afterPropertiesSet...........................");
+        return super.requiresAuthentication(request, response);
+
+    }
+
+
 }

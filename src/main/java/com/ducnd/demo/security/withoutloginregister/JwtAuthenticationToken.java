@@ -35,7 +35,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
         } catch (ExpiredJwtException expiredEx) {
             throw new JwtExpiredTokenException(expiredEx.getMessage(), token, expiredEx);
         }
-
     }
 
     @Override

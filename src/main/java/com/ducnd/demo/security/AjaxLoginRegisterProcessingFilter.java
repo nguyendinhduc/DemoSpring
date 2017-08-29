@@ -2,6 +2,7 @@ package com.ducnd.demo.security;
 
 import com.ducnd.Constants;
 import com.ducnd.demo.StringUtils;
+import com.ducnd.demo.security.exception.AuthenticationUsernamePasswordInvalidException;
 import com.ducnd.demo.security.login.AjaxAuthenLogin;
 import com.ducnd.demo.security.regiseter.AjaxAuthenRegister;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.FilterChain;
@@ -24,12 +26,12 @@ import java.io.IOException;
 public class AjaxLoginRegisterProcessingFilter extends AbstractAuthenticationProcessingFilter {
     private AjaxAuthenticationLoginRegisterSuccessHandler successHandler;
 
-    private AjaxAuthenticationLoginRegisterFailureHandler failureHandler;
+    private AuthenticationFailureHandler failureHandler;
 
     private ObjectMapper objectMapper;
 
     public AjaxLoginRegisterProcessingFilter(RequestMatcher matcher, AjaxAuthenticationLoginRegisterSuccessHandler successHandler,
-                                             AjaxAuthenticationLoginRegisterFailureHandler failureHandler, ObjectMapper mapper) {
+                                             AuthenticationFailureHandler failureHandler, ObjectMapper mapper) {
         super(matcher);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
@@ -40,7 +42,7 @@ public class AjaxLoginRegisterProcessingFilter extends AbstractAuthenticationPro
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
         LoginRequest loginRequest = objectMapper.readValue(httpServletRequest.getReader(), LoginRequest.class);
         if (StringUtils.isBlank(loginRequest.getUsername()) || StringUtils.isBlank(loginRequest.getPassword())) {
-            throw new AuthenticationServiceException("invalid param for login");
+            throw new AuthenticationUsernamePasswordInvalidException("invalid param for login");
         }
         if (httpServletRequest.getRequestURI().equals(Constants.ENPOINT_LOGIN)) {
             AjaxAuthenLogin authenLogin = new AjaxAuthenLogin(loginRequest.getUsername(), loginRequest.getPassword());

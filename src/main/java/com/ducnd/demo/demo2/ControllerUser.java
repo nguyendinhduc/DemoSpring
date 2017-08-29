@@ -42,17 +42,18 @@ public class ControllerUser {
     public List<com.ducnd.mysql.tables.pojos.User> getAllUser() {
         JwtAuthenticationToken token = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         System.out.println("ControllerUser........" + token.getCredentials().getToken());
-        List<com.ducnd.mysql.tables.pojos.User> users = new ArrayList<>();
-        SelectLimitStep<UserRecord> userRecords = baseManager.getDslContext().selectFrom(User.USER).orderBy(User.USER.ID);
-        for (UserRecord userRecord : userRecords) {
-            com.ducnd.mysql.tables.pojos.User user = new com.ducnd.mysql.tables.pojos.User();
-            user.setId(userRecord.getId());
-            user.setPassword(userRecord.getPassword());
-            user.setUsername(userRecord.getUsername());
-            user.setToken(userRecord.getToken());
-            users.add(user);
-        }
-        return users;
+//        List<com.ducnd.mysql.tables.pojos.User> users = new ArrayList<>();
+//        SelectLimitStep<UserRecord> userRecords = baseManager.getDslContext().selectFrom(User.USER).orderBy(User.USER.ID);
+//        for (UserRecord userRecord : userRecords) {
+//            com.ducnd.mysql.tables.pojos.User user = new com.ducnd.mysql.tables.pojos.User();
+//            user.setId(userRecord.getId());
+//            user.setPassword(userRecord.getPassword());
+//            user.setUsername(userRecord.getUsername());
+//            user.setToken(userRecord.getToken());
+//            users.add(user);
+//        }
+//        return users;
+         return baseManager.getDslContext().selectFrom(User.USER).orderBy(User.USER.ID).fetchInto(com.ducnd.mysql.tables.pojos.User.class);
     }
 
     @PostMapping(value = "postUser", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.TEXT_PLAIN_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.TEXT_PLAIN_VALUE})
@@ -152,6 +153,7 @@ public class ControllerUser {
             return ResponseUtils.getBaseResponse(401, "can not insert int to database");
         }
     }
+
 
 
     private static class LoginResponse extends BaseResponse {

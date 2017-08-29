@@ -15,4 +15,8 @@ public interface Constants {
     String MSG_AUTHEN = "Token invalidate";
     String TOKEN_NAME = "token";
     int MIN_LEHGTH_PASSWORD = 6;
+
+    int STATUS_CODE_TOKEN_IN_VALID = 10;
+    int STATUS_CODE_EXPIRED_TOKEN = 20;
+    int STATUS_CODE_USERNAME_OR_PASSWORD_INVALID = 30;
 }

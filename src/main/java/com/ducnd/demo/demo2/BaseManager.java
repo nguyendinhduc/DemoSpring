@@ -10,9 +10,12 @@ import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -63,9 +66,17 @@ public class BaseManager {
     }
 
     @Autowired
+    @Qualifier(value = "dslContext")
     private DSLContext dslContext;
 
-    public DSLContext getDslContext(){
+    public DSLContext getDslContext() {
         return dslContext;
+    }
+
+    public void clearSession() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.isAuthenticated()) {
+            auth.setAuthenticated(false);
+        }
     }
 }

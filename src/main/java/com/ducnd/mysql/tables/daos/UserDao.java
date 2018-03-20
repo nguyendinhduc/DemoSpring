@@ -86,16 +86,9 @@ public class UserDao extends DAOImpl<UserRecord, com.ducnd.mysql.tables.pojos.Us
     }
 
     /**
-     * Fetch records that have <code>deviceToken IN (values)</code>
+     * Fetch records that have <code>devicetoken IN (values)</code>
      */
     public List<com.ducnd.mysql.tables.pojos.User> fetchByDevicetoken(String... values) {
         return fetch(User.USER.DEVICETOKEN, values);
-    }
-
-    /**
-     * Fetch records that have <code>osType IN (values)</code>
-     */
-    public List<com.ducnd.mysql.tables.pojos.User> fetchByOstype(String... values) {
-        return fetch(User.USER.OSTYPE, values);
     }
 }

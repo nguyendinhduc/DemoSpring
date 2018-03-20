@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User extends TableImpl<UserRecord> {
 
-    private static final long serialVersionUID = -1049482749;
+    private static final long serialVersionUID = 1452123963;
 
     /**
      * The reference instance of <code>demo.user</code>
@@ -58,12 +58,12 @@ public class User extends TableImpl<UserRecord> {
     /**
      * The column <code>demo.user.username</code>.
      */
-    public final TableField<UserRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this, "");
+    public final TableField<UserRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
     /**
      * The column <code>demo.user.password</code>.
      */
-    public final TableField<UserRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+    public final TableField<UserRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
     /**
      * The column <code>demo.user.token</code>.
@@ -71,14 +71,9 @@ public class User extends TableImpl<UserRecord> {
     public final TableField<UserRecord, String> TOKEN = createField("token", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
 
     /**
-     * The column <code>demo.user.deviceToken</code>.
+     * The column <code>demo.user.devicetoken</code>.
      */
-    public final TableField<UserRecord, String> DEVICETOKEN = createField("deviceToken", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
-
-    /**
-     * The column <code>demo.user.osType</code>.
-     */
-    public final TableField<UserRecord, String> OSTYPE = createField("osType", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+    public final TableField<UserRecord, String> DEVICETOKEN = createField("devicetoken", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
 
     /**
      * Create a <code>demo.user</code> table reference

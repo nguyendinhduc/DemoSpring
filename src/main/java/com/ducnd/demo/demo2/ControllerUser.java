@@ -12,7 +12,6 @@ import io.jsonwebtoken.impl.TextCodec;
 import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
 import org.jooq.Condition;
-import org.jooq.SelectLimitStep;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +34,7 @@ public class ControllerUser {
     private static final Logger LOG = Logger.getLogger(ControllerUser.class);
     @Autowired
     private BaseManager baseManager;
+
 
     @GetMapping(value = "getAll")
     @ResponseBody
@@ -53,7 +52,7 @@ public class ControllerUser {
 //            users.add(user);
 //        }
 //        return users;
-         return baseManager.getDslContext().selectFrom(User.USER).orderBy(User.USER.ID).fetchInto(com.ducnd.mysql.tables.pojos.User.class);
+        return baseManager.getDslContext().selectFrom(User.USER).orderBy(User.USER.ID).fetchInto(com.ducnd.mysql.tables.pojos.User.class);
     }
 
     @PostMapping(value = "postUser", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.TEXT_PLAIN_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.TEXT_PLAIN_VALUE})
@@ -153,7 +152,6 @@ public class ControllerUser {
             return ResponseUtils.getBaseResponse(401, "can not insert int to database");
         }
     }
-
 
 
     private static class LoginResponse extends BaseResponse {
